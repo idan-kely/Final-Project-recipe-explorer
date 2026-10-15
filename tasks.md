@@ -1,25 +1,25 @@
-# Tasks — Recipe Explorer
+# Project Tasks - Recipe Explorer
 
-- [x] **Task 1: Setup & Local Mock Data (TypeScript)**
-  - **Done when:** The app runs with `npm run dev` without console errors, rendering initial recipes from `mockRecipes.json` using strict TypeScript interfaces (`Recipe`) without `any`.
+- [x] **Task 1: Setup & Local Mock Data with Types**
+  - **Done when:** The app runs with `npm run dev`, displaying at least 3 recipes from a local JSON file (`mockRecipes.json`) with TypeScript interfaces and no `any`.
 
-- [ ] **Task 2: Routing Setup & Multi-Page Shell (React Router)**
-  - **Done when:** `react-router-dom` is configured with a navigation bar (`NavLink`) supporting 4 routes: Home/List (`/`), Recipe Details (`/recipe/:id`), Favorites (`/favorites`), and Random Meal (`/random`).
+- [x] **Task 2: Routing Setup (List & Detail View)**
+  - **Done when:** `react-router-dom` is configured with a navigation menu, rendering the recipe list at `/` and the detail view at `/recipe/:id` using `useParams`.
 
-- [ ] **Task 3: Modular Components Breakdown**
-  - **Done when:** The interface is decomposed into at least 4 reusable custom components (`Navbar`, `RecipeCard`, `SearchBar`, `RecipeDetailView`) with typed props and no inline duplication.
+- [ ] **Task 3: Live API Integration (TheMealDB)**
+  - **Done when:** Local mock data is replaced with live `fetch` inside `useEffect`, displaying loading, error, and data states.
 
-- [ ] **Task 4: Live API Integration (TheMealDB with useEffect & Fetch)**
-  - **Done when:** Live recipe data is fetched from TheMealDB API, replacing mock data, and handles all 3 visual states cleanly: loading, error, and loaded data.
+- [ ] **Task 4: Unit Testing with Vitest**
+  - **Done when:** At least 5 unit tests pass with `npm test` and run via `@vitest/ui`.
 
-- [ ] **Task 5: Real-Time Search & Client-Side Filtering**
-  - **Done when:** Typing into the search bar filters the recipe list dynamically by meal name in real time, displaying a clear empty state message when no results match.
+- [ ] **Task 5: Two Extra Pages (Favorites & Random Meal)**
+  - **Done when:** Two additional functional routes (`/favorites` and `/random`) are implemented with their own views.
 
-- [ ] **Task 6: Additional Pages Logic (Favorites & Random Recipe)**
-  - **Done when:** The Favorites page displays recipes saved to `localStorage`, and the Random page fetches and displays a surprise recipe on click.
+- [ ] **Task 6: Search & Filter Logic**
+  - **Done when:** Real-time search/filter allows filtering the recipe list.
 
-- [ ] **Task 7: Unit Testing with Vitest and Vitest UI**
-  - **Done when:** At least 5 unit tests pass successfully with `npm test`, covering data filtering and API response transformations, and can be viewed via `npm run test:ui`.
+- [ ] **Task 7: Custom Responsive CSS**
+  - **Done when:** Custom CSS provides an appealing layout on both desktop and mobile viewports.
 
-- [ ] **Task 8: Custom Responsive CSS & Final Documentation**
-  - **Done when:** The app has custom responsive styling adapted to mobile screens (375px), `README.md` is complete with run instructions, and `npm run build` succeeds with zero errors.
+- [ ] **Task 8: Documentation & Verification**
+  - **Done when:** `README.md` is complete, and `npm run build` and tests pass without errors.

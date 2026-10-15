@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
-  // פונקציה שמחזירה סגנון עיצוב שונה אם הקישור הוא העמוד הפעיל כרגע
   const getLinkStyle = ({ isActive }: { isActive: boolean }) => ({
     textDecoration: 'none',
     color: isActive ? '#2563eb' : '#475569',
@@ -27,11 +26,9 @@ export default function Navbar() {
         🍳 Recipe Explorer
       </div>
 
-      {/* קישורי הניווט בין העמודים */}
-      <div style={{ display: 'flex', gap: '20px' }}>
+      {/* קישור ניווט יחיד לעמוד הבית */}
+      <div>
         <NavLink to="/" style={getLinkStyle}>Home</NavLink>
-        <NavLink to="/favorites" style={getLinkStyle}>Favorites</NavLink>
-        <NavLink to="/random" style={getLinkStyle}>Random Meal</NavLink>
       </div>
     </nav>
   );

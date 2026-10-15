@@ -13,3 +13,8 @@ I checked: Clicked on a recipe card to verify the URL changed dynamically to /re
 Prompt: Clarify how Props work with TypeScript in RecipeCard, and simplify the Navbar to only link to Home so there are no empty placeholder screens before Task 5.
 Agent did: Explained the type contract (recipe: Recipe) versus runtime props, and simplified Navbar.tsx to route to Home while keeping the dynamic detail page routing intact.
 I checked: Tested the navigation again in the browser to ensure no dead links exist, verified npm run build succeeded, and made separate Git commits for each component.
+
+## Task 3 — Live API Integration with Fetch and useEffect
+Prompt: Replace the local mock JSON with live fetching from TheMealDB API in App.tsx, handling loading, error, and data states strictly without using `any`.
+Agent did: Updated `src/App.tsx` with native `fetch` inside `useEffect`, mapped the raw API response to the clean `Recipe` interface, and added loading and error UI states.
+I checked: Reloaded the application in the browser at http://localhost:5173, verified recipes are fetched dynamically from the live API with the loading spinner, tested error fallback, and confirmed `npm run build` succeeds without TypeScript errors.

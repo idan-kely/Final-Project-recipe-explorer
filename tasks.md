@@ -6,7 +6,7 @@
 - [x] **Task 2: Routing Setup (List & Detail View)**
   - **Done when:** `react-router-dom` is configured with a navigation menu, rendering the recipe list at `/` and the detail view at `/recipe/:id` using `useParams`.
 
-- [ ] **Task 3: Live API Integration (TheMealDB)**
+- [x] **Task 3: Live API Integration (TheMealDB)**
   - **Done when:** Local mock data is replaced with live `fetch` inside `useEffect`, displaying loading, error, and data states.
 
 - [ ] **Task 4: Unit Testing with Vitest**

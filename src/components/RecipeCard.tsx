@@ -18,7 +18,7 @@ export default function RecipeCard({ recipe, isFavorite, onToggleFavorite }: Rec
         </div>
       </Link>
       <button className={`action-button recipe-card-action${isFavorite ? ' action-button-danger' : ''}`} type="button" aria-pressed={isFavorite} onClick={() => onToggleFavorite(recipe.id)}>
-        {isFavorite ? '♥ הסרה מהמועדפים' : '♡ הוספה למועדפים'}
+        {isFavorite ? '♥ Remove from favorites' : '♡ Add to favorites'}
       </button>
     </article>
   );

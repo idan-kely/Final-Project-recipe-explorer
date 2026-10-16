@@ -1,5 +1,5 @@
 ﻿:root {
-  font-family: 'Heebo', 'Arial', sans-serif;
+  font-family: 'Nunito Sans', 'Arial', sans-serif;
   color: #26332d;
   background: #f6f7f2;
   font-synthesis: none;
@@ -27,3 +27,4 @@ a { color: inherit; }
 #root { min-height: 100vh; }
 
 h1, h2, h3, p { margin-top: 0; }
+

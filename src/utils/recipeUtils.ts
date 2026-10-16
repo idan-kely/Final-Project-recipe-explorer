@@ -20,15 +20,30 @@ export function formatInstructions(instructions: string): string[] {
     return [];
   }
 
-  return instructions
+  const normalized = instructions
     .replace(/\r\n?/g, '\n')
-    // The API sometimes puts stray numbered-list markers on their own line.
     .replace(/(?:^|\n)\s*\d+[.)]?\s*(?=\n|$)/g, '\n')
-    // Split on paragraph breaks and sentence boundaries when the API returns
-    // the whole recipe as one long paragraph.
-    .split(/\n+|(?<=[.!?])\s+(?=[A-Z])/)
+    .trim();
+
+  // Remove API labels such as "step 1" that may occupy their own line.
+  const withoutStepLabels = normalized.replace(/(?:^|\n)\s*step\s*\d+\s*[.:)]?\s*(?=\n|$)/gi, '\n');
+
+  // Some API recipes encode their steps as "1. text 2. text" in one line.
+  const numberedSteps = withoutStepLabels
+    .split(/(?:^|\s)\d+[.)]\s+/)
     .map((step) => step.trim())
-    .filter((step) => step.length > 0 && !/^\d+[.)]?$/.test(step));
+    .filter((step) => step.length > 0);
+  const paragraphs = numberedSteps.length > 1
+    ? numberedSteps
+    : withoutStepLabels.split(/\n+/).map((step) => step.trim()).filter((step) => step.length > 0);
+
+  return paragraphs
+    .flatMap((paragraph) => paragraph.split(/(?<=[.!?])\s+(?=[A-Z])/))
+    .map((step) => step.trim()
+      .replace(/^step\s*\d+\s*[.:)]?\s*/i, '')
+      .replace(/^next\b\s*,?\s*/i, '')
+      .replace(/[.\s]+$/g, ''))
+    .filter((step) => step.length > 0 && !/^\d+[.)]?$/.test(step) && !/^step\s*\d+$/i.test(step));
 }
 
 

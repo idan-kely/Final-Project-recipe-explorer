@@ -30,9 +30,9 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
       setLoading(true);
       setError(null);
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
-      if (!response.ok) throw new Error(`שגיאת שרת (${response.status})`);
+      if (!response.ok) throw new Error(`Server error (${response.status})`);
       const data: MealDBResponse = await response.json();
-      if (!data.meals || data.meals.length === 0) throw new Error('לא נמצא מתכון כרגע.');
+      if (!data.meals || data.meals.length === 0) throw new Error('No recipe found right now');
 
       const item = data.meals[0];
       const mappedRecipe: Recipe = {
@@ -47,7 +47,7 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
       setRecipe(mappedRecipe);
       onRecipeLoaded(mappedRecipe);
     } catch {
-      setError('לא הצלחנו לטעון מתכון. בדקו את החיבור לאינטרנט ונסו שוב.');
+      setError('Could not load a recipe. Check your internet connection and try again');
     } finally {
       setLoading(false);
     }
@@ -61,16 +61,16 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
     <section>
       <div className="random-header">
         <div>
-          <h1 className="page-heading">צריכים רעיון לארוחה?</h1>
-          <p className="page-subtitle">נגריל עבורכם מתכון חדש מהעולם.</p>
+          <h1 className="page-heading">Need an idea for a meal?</h1>
+          <p className="page-subtitle">We will pick a random recipe for you</p>
         </div>
         <button className="action-button action-button-primary" type="button" onClick={fetchRandomMeal} disabled={loading}>
-          {loading ? 'טוענים מתכון…' : '🎲 הגרלת מתכון נוסף'}
+          {loading ? 'Loading recipe…' : '🎲 Pick another recipe'}
         </button>
       </div>
 
-      {loading && <div className="status-message" role="status">מחפשים לכם משהו טעים…</div>}
-      {error && !loading && <div className="status-message status-error" role="alert"><p>{error}</p><button className="action-button" type="button" onClick={fetchRandomMeal}>לנסות שוב</button></div>}
+      {loading && <div className="status-message" role="status">Finding something delicious…</div>}
+      {error && !loading && <div className="status-message status-error" role="alert"><p>{error}</p><button className="action-button" type="button" onClick={fetchRandomMeal}>Try again</button></div>}
 
       {!loading && !error && recipe && (
         <article className="random-recipe">
@@ -78,10 +78,10 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
           <div className="random-recipe-content">
             <h2 className="random-recipe-title">{recipe.title}</h2>
             <div className="recipe-meta">
-              <span className="recipe-meta-item">קטגוריה: {recipe.category}</span>
-              <span className="recipe-meta-item">מטבח: {recipe.area}</span>
+              <span className="recipe-meta-item">Category: {recipe.category}</span>
+              <span className="recipe-meta-item">Cuisine: {recipe.area}</span>
             </div>
-            <Link className="action-button action-button-primary" to={`/recipe/${recipe.id}`}>לעמוד המתכון המלא</Link>
+            <Link className="action-button action-button-primary" to={`/recipe/${recipe.id}`}>View full recipe</Link>
           </div>
         </article>
       )}

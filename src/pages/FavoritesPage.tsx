@@ -13,17 +13,17 @@ export default function FavoritesPage({ favorites, allRecipes, onToggleFavorite 
   if (favoriteRecipes.length === 0) {
     return (
       <section className="empty-state">
-        <h1 className="page-heading">עדיין אין כאן מועדפים</h1>
-        <p>שמרו מתכונים שאהבתם, והם יחכו לכם כאן.</p>
-        <Link className="action-button action-button-primary" to="/">לכל המתכונים</Link>
+        <h1 className="page-heading">No favorites yet</h1>
+        <p>Save recipes you love and find them here</p>
+        <Link className="action-button action-button-primary" to="/">Browse all recipes</Link>
       </section>
     );
   }
 
   return (
     <section>
-      <h1 className="page-heading">המתכונים שאהבתם</h1>
-      <p className="page-subtitle">{favoriteRecipes.length} מתכונים שמורים</p>
+      <h1 className="page-heading">Your favorite recipes</h1>
+      <p className="page-subtitle">{favoriteRecipes.length} saved recipes</p>
       <div className="recipe-grid">
         {favoriteRecipes.map((recipe) => (
           <article className="recipe-card" key={recipe.id}>
@@ -35,7 +35,7 @@ export default function FavoritesPage({ favorites, allRecipes, onToggleFavorite 
               </div>
             </Link>
             <button className="action-button action-button-danger recipe-card-action" type="button" onClick={() => onToggleFavorite(recipe.id)}>
-              ♥ הסרה מהמועדפים
+              ♥ Remove from favorites
             </button>
           </article>
         ))}

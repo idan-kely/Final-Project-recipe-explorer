@@ -49,7 +49,7 @@ function App() {
         setLoading(true);
         setError(null);
         const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        if (!response.ok) throw new Error(`שגיאת שרת (${response.status})`);
+        if (!response.ok) throw new Error(`Server error (${response.status})`);
         const data: MealDBResponse = await response.json();
         if (!data.meals) {
           setRecipes([]);
@@ -75,7 +75,7 @@ function App() {
         });
         setRecipes(mappedRecipes);
       } catch {
-        setError('לא הצלחנו לטעון את המתכונים. בדקו את החיבור לאינטרנט ונסו שוב.');
+        setError('Could not load recipes. Please check your internet connection and try again');
       } finally {
         setLoading(false);
       }
@@ -104,15 +104,15 @@ function App() {
       <div className="app-shell">
         <Navbar />
         <main className="page-content">
-          {loading && <div className="status-message" role="status"><h2>טוענים מתכונים…</h2><p>רק רגע, אנחנו מביאים מתכונים מהעולם.</p></div>}
-          {!loading && error && <div className="status-message status-error" role="alert"><h2>טעינת המתכונים נכשלה</h2><p>{error}</p></div>}
+          {loading && <div className="status-message" role="status"><h2>Loading recipes…</h2><p>Getting fresh recipes from around the world</p></div>}
+          {!loading && error && <div className="status-message status-error" role="alert"><h2>Could not load recipes</h2><p>{error}</p></div>}
           {!loading && !error && (
             <Routes>
               <Route path="/" element={<RecipeList recipes={recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
               <Route path="/recipe/:id" element={<RecipeDetail recipes={randomRecipe ? [...recipes, randomRecipe] : recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
               <Route path="/favorites" element={<FavoritesPage favorites={favorites} allRecipes={recipes} onToggleFavorite={toggleFavorite} />} />
               <Route path="/random" element={<RandomPage onRecipeLoaded={setRandomRecipe} />} />
-              <Route path="*" element={<section className="empty-state"><h1 className="page-heading">העמוד לא נמצא</h1><p>הכתובת שהזנתם אינה קיימת.</p></section>} />
+              <Route path="*" element={<section className="empty-state"><h1 className="page-heading">Page not found</h1><p>The address you entered does not exist</p></section>} />
             </Routes>
           )}
         </main>
@@ -122,4 +122,3 @@ function App() {
 }
 
 export default App;
-

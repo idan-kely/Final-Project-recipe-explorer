@@ -99,22 +99,37 @@ function App() {
     );
   };
 
+  const addRandomRecipeToList = (randomRecipe: Recipe) => {
+    setRecipes((currentRecipes) =>
+      currentRecipes.some((recipe) => recipe.id === randomRecipe.id)
+        ? currentRecipes
+        : [...currentRecipes, randomRecipe],
+    );
+    setRandomRecipe(randomRecipe);
+  };
+
   return (
     <BrowserRouter>
       <div className="app-shell">
         <Navbar />
         <main className="page-content">
-          {loading && <div className="status-message" role="status"><h2>Loading recipes…</h2><p>Getting fresh recipes from around the world</p></div>}
-          {!loading && error && <div className="status-message status-error" role="alert"><h2>Could not load recipes</h2><p>{error}</p></div>}
-          {!loading && !error && (
-            <Routes>
-              <Route path="/" element={<RecipeList recipes={recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
-              <Route path="/recipe/:id" element={<RecipeDetail recipes={randomRecipe ? [...recipes, randomRecipe] : recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
-              <Route path="/favorites" element={<FavoritesPage favorites={favorites} allRecipes={recipes} onToggleFavorite={toggleFavorite} />} />
-              <Route path="/random" element={<RandomPage onRecipeLoaded={setRandomRecipe} />} />
-              <Route path="*" element={<section className="empty-state"><h1 className="page-heading">Page not found</h1><p>The address you entered does not exist</p></section>} />
-            </Routes>
-          )}
+          <Routes>
+            <Route path="/" element={loading
+              ? <div className="status-message" role="status"><h2>Loading recipes…</h2><p>Getting fresh recipes from around the world</p></div>
+              : error
+                ? <div className="status-message status-error" role="alert"><h2>Could not load recipes</h2><p>{error}</p></div>
+                : <RecipeList recipes={recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />
+            } />
+            <Route path="/recipe/:id" element={<RecipeDetail recipes={randomRecipe ? [...recipes, randomRecipe] : recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
+            <Route path="/favorites" element={loading
+              ? <div className="status-message" role="status">Loading favorite recipes…</div>
+              : error
+                ? <div className="status-message status-error" role="alert"><h2>Could not load recipes</h2><p>{error}</p></div>
+                : <FavoritesPage favorites={favorites} allRecipes={recipes} onToggleFavorite={toggleFavorite} />
+            } />
+            <Route path="/random" element={<RandomPage onRecipeLoaded={addRandomRecipeToList} />} />
+            <Route path="*" element={<section className="empty-state"><h1 className="page-heading">Page not found</h1><p>The address you entered does not exist</p></section>} />
+          </Routes>
         </main>
       </div>
     </BrowserRouter>
@@ -122,3 +137,4 @@ function App() {
 }
 
 export default App;
+

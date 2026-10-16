@@ -86,3 +86,7 @@ Agent did: Replaced the default Vite README with project-specific information ab
 I checked: Ran `npm run build` successfully and confirmed all 5 unit tests pass with `npm test`.
 
 
+## Improve Random Recipe Flow and Clean Instructions
+Prompt: Fix recipe details so a recipe opened from a random selection still loads after refreshing the page. Add newly selected random recipes to the main recipe list without duplicates, hide the cuisine label when the API provides no area, and remove standalone "Enjoy" lines from the instructions.
+Agent did: Updated recipe detail loading to fetch a recipe by ID when it is not already in app state, added randomly selected recipes to the main list if they are not already present, hid empty cuisine labels, and filtered standalone "Enjoy" lines in `formatInstructions`.
+I checked: Ran `npm run build` successfully. The user manually verified that the random recipe includes its ingredients.

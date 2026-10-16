@@ -88,7 +88,7 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
             <h2 className="random-recipe-title">{recipe.title}</h2>
             <div className="recipe-meta">
               <span className="recipe-meta-item">Category: {recipe.category}</span>
-              <span className="recipe-meta-item">Cuisine: {recipe.area}</span>
+              {recipe.area?.trim() && <span className="recipe-meta-item">Cuisine: {recipe.area}</span>}
             </div>
             <Link className="action-button action-button-primary" to={`/recipe/${recipe.id}`}>View full recipe</Link>
           </div>

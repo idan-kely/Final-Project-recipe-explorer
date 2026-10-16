@@ -43,7 +43,10 @@ export function formatInstructions(instructions: string): string[] {
       .replace(/^step\s*\d+\s*[.:)]?\s*/i, '')
       .replace(/^next\b\s*,?\s*/i, '')
       .replace(/[.\s]+$/g, ''))
-    .filter((step) => step.length > 0 && !/^\d+[.)]?$/.test(step) && !/^step\s*\d+$/i.test(step));
+    .filter((step) => step.length > 0
+      && !/^\d+[.)]?$/.test(step)
+      && !/^step\s*\d+$/i.test(step)
+      && !/^enjoy[.!]?$/i.test(step));
 }
 
 

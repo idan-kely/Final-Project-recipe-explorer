@@ -35,6 +35,15 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
       if (!data.meals || data.meals.length === 0) throw new Error('No recipe found right now');
 
       const item = data.meals[0];
+      const ingredients: string[] = [];
+      for (let index = 1; index <= 20; index++) {
+        const ingredient = item[`strIngredient${index}`];
+        const measure = item[`strMeasure${index}`];
+        if (ingredient && ingredient.trim()) {
+          ingredients.push(`${measure && measure.trim() ? `${measure.trim()} ` : ''}${ingredient.trim()}`);
+        }
+      }
+
       const mappedRecipe: Recipe = {
         id: item.idMeal,
         title: item.strMeal,
@@ -42,7 +51,7 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
         area: item.strArea,
         instructions: item.strInstructions,
         thumbnail: item.strMealThumb,
-        ingredients: [],
+        ingredients,
       };
       setRecipe(mappedRecipe);
       onRecipeLoaded(mappedRecipe);

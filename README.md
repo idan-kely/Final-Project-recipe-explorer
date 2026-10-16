@@ -1,75 +1,77 @@
-# React + TypeScript + Vite
+﻿# Recipe Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Recipe Explorer is a React application for discovering recipes from TheMealDB. Browse recipes, search by name or category, open a recipe for its instructions, save favorites, and get a random recipe suggestion.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Browse recipes fetched from TheMealDB
+- Search recipes by title or category
+- Open a recipe details page with ingredients and preparation instructions
+- Add and remove favorite recipes; favorites are saved in browser `localStorage`
+- Generate a random recipe and open its full details
+- Responsive layout for desktop and mobile screens
 
-## React Compiler
+## Technologies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React, Vite, and TypeScript
+- React Router for page navigation
+- TheMealDB public API
+- Vitest and Vitest UI for unit tests
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Requirements: Node.js and npm
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Install dependencies:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```bash
+   npm install
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Start the development server:
 
+   ```bash
+   npm run dev
+   ```
+
+3. Open the local URL printed in the terminal, usually `http://localhost:5173`.
+
+## Tests and Build
+
+Run the unit tests:
+
+```bash
+npm test
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Run the tests in Vitest UI:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm run test:ui
 ```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+## API
+
+Recipe data is fetched from [TheMealDB](https://www.themealdb.com/api.php), a public recipe API. The application uses its search endpoint to load recipes and its random endpoint to suggest a meal. No API key is configured in the client.
+
+## Project Structure
+
+- `src/components/` - navigation, recipe list, cards, and recipe details
+- `src/pages/` - favorites and random recipe pages
+- `src/utils/` - recipe filtering, instruction formatting, and category statistics
+- `src/types/` - TypeScript recipe model
+- `src/utils/recipeUtils.test.ts` - unit tests for recipe utility functions
+
+## Project Documents
+
+- `PRD.md` - product goals and acceptance criteria
+- `tasks.md` - implementation tasks and completion criteria
+- `PROMPTS.md` - prompt and implementation log
+
+

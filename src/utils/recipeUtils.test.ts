@@ -51,13 +51,13 @@ describe('recipeUtils unit tests', () => {
     expect(result).toEqual(sampleRecipes);
   });
 
-  it('4. should split instructions into clean steps and remove empty lines', () => {
+  it('4. should remove API step labels and split instructions into clean steps', () => {
     const rawText = 'Step 1: Boil water\r\n\r\nStep 2: Add salt\nStep 3: Serve';
     const steps = formatInstructions(rawText);
     expect(steps).toHaveLength(3);
-    expect(steps[0]).toBe('Step 1: Boil water');
-    expect(steps[1]).toBe('Step 2: Add salt');
-    expect(steps[2]).toBe('Step 3: Serve');
+    expect(steps[0]).toBe('Boil water');
+    expect(steps[1]).toBe('Add salt');
+    expect(steps[2]).toBe('Serve');
   });
 
   it('5. should correctly count recipes per category', () => {

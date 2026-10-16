@@ -54,3 +54,8 @@ Prompt: Update the interface styling for Hebrew and right-to-left reading, use a
 Agent did: Updated the page language and direction, applied consistent responsive styling and Hebrew labels, and changed recipe instruction formatting to remove standalone numbers and avoid UI-added numbering while preserving the API's original recipe text.
 I checked: Ran `npm.cmd run build` successfully and manually verified the updated page layout and recipe instructions in the browser.
 
+
+## Task 5.7 — Refine English Interface and Recipe Instructions
+Prompt: Make the entire application interface English and left-to-right, remove trailing periods from recipe instruction lines, format instructions as clear numbered steps, and remove API labels such as "step 1" and filler words such as "Next" at the start of a step. Preserve the original recipe text otherwise.
+Agent did: Replaced Hebrew interface text with English, updated the document language and direction and font, and refined instruction formatting to remove trailing periods, API step labels, and leading "Next" while displaying recipe instructions as numbered steps.
+I checked: Ran `npm.cmd run build` successfully after the interface and instruction formatting changes.

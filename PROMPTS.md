@@ -33,3 +33,8 @@ I checked: Inspected the component code, verified TypeScript props interface, an
 Prompt: Build a standalone RandomPage component fetching surprise dishes on demand from TheMealDB random.php endpoint with loading, error, and refresh triggers.
 Agent did: Created `src/pages/RandomPage.tsx` integrating dynamic fetch, formatting instructions via `formatInstructions` utility, and rendering an interactive re-roll button.
 I checked: Verified component type safety, verified loading and error states, and confirmed manual re-draw button logic without page refresh.
+
+## Task 5.3 — Update Navbar with NavLink Integration
+Prompt: Update the Navbar component to include active state styling and links to Home, Favorites, and Random pages using React Router's NavLink component strictly without any.
+Agent did: Modified `src/components/Navbar.tsx` with dynamic `NavLink` inline style functions for visual active feedback.
+I checked: Clicked each navigation link in the browser, verified the URL paths changed correctly, and confirmed active styling (bold text and blue border) highlighted the current page.

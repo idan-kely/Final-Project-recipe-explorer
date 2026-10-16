@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import type { Recipe } from '../types/recipe';
 
 interface FavoritesPageProps {
@@ -12,49 +12,34 @@ export default function FavoritesPage({ favorites, allRecipes, onToggleFavorite 
 
   if (favoriteRecipes.length === 0) {
     return (
-      <div style={{ textAlign: 'center', padding: '40px 20px', background: '#f8fafc', borderRadius: '12px' }}>
-        <h2>❤️ No Favorites Yet</h2>
-        <p style={{ color: '#64748b' }}>Explore delicious recipes on the home page and save your favorites!</p>
-        <Link to="/" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>
-          ← Back to Recipes
-        </Link>
-      </div>
+      <section className="empty-state">
+        <h1 className="page-heading">עדיין אין כאן מועדפים</h1>
+        <p>שמרו מתכונים שאהבתם, והם יחכו לכם כאן.</p>
+        <Link className="action-button action-button-primary" to="/">לכל המתכונים</Link>
+      </section>
     );
   }
 
   return (
-    <div>
-      <h2 style={{ marginBottom: '20px' }}>⭐ Your Favorite Recipes ({favoriteRecipes.length})</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
+    <section>
+      <h1 className="page-heading">המתכונים שאהבתם</h1>
+      <p className="page-subtitle">{favoriteRecipes.length} מתכונים שמורים</p>
+      <div className="recipe-grid">
         {favoriteRecipes.map((recipe) => (
-          <div key={recipe.id} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden', background: '#fff' }}>
-            <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img src={recipe.thumbnail} alt={recipe.title} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
-              <div style={{ padding: '12px' }}>
-                <h3 style={{ margin: '0 0 8px 0', fontSize: '18px' }}>{recipe.title}</h3>
-                <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>{recipe.category} • {recipe.area}</p>
+          <article className="recipe-card" key={recipe.id}>
+            <Link to={`/recipe/${recipe.id}`} className="recipe-card-link">
+              <img className="recipe-card-image" src={recipe.thumbnail} alt={recipe.title} />
+              <div className="recipe-card-body">
+                <h2 className="recipe-card-title">{recipe.title}</h2>
+                <p className="recipe-card-meta">{recipe.category} · {recipe.area}</p>
               </div>
             </Link>
-            <div style={{ padding: '0 12px 12px 12px' }}>
-              <button
-                onClick={() => onToggleFavorite(recipe.id)}
-                style={{
-                  width: '100%',
-                  padding: '8px',
-                  border: '1px solid #ef4444',
-                  background: '#fef2f2',
-                  color: '#dc2626',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                }}
-              >
-                💔 Remove from Favorites
-              </button>
-            </div>
-          </div>
+            <button className="action-button action-button-danger recipe-card-action" type="button" onClick={() => onToggleFavorite(recipe.id)}>
+              ♥ הסרה מהמועדפים
+            </button>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

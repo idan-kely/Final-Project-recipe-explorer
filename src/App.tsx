@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import type { Recipe } from './types/recipe';
 import Navbar from './components/Navbar';
 import RecipeList from './components/RecipeList';
 import RecipeDetail from './components/RecipeDetail';
+import FavoritesPage from './pages/FavoritesPage';
+import RandomPage from './pages/RandomPage';
 import './App.css';
 
-// ממשק שמגדיר בדיוק את המבנה הגולמי שחוזר מ-TheMealDB API ללא שימוש ב-any
 interface MealDBItem {
   idMeal: string;
   strMeal: string;
@@ -21,8 +22,24 @@ interface MealDBResponse {
   meals: MealDBItem[] | null;
 }
 
+const FAVORITES_STORAGE_KEY = 'recipe-explorer-favorites';
+
+function readSavedFavorites(): string[] {
+  try {
+    const savedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
+    if (!savedFavorites) return [];
+    const parsedFavorites: unknown = JSON.parse(savedFavorites);
+    if (Array.isArray(parsedFavorites) && parsedFavorites.every((id) => typeof id === 'string')) return parsedFavorites;
+  } catch {
+    // Invalid or unavailable storage falls back to an empty favorites list.
+  }
+  return [];
+}
+
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [randomRecipe, setRandomRecipe] = useState<Recipe | null>(null);
+  const [favorites, setFavorites] = useState<string[]>(readSavedFavorites);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,32 +48,21 @@ function App() {
       try {
         setLoading(true);
         setError(null);
-
         const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        
-        if (!response.ok) {
-          throw new Error(`Server returned status: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`שגיאת שרת (${response.status})`);
         const data: MealDBResponse = await response.json();
-
         if (!data.meals) {
           setRecipes([]);
           return;
         }
 
-        // המרת נתוני ה-API לטיפוס ה-Recipe שהגדרנו באפליקציה
         const mappedRecipes: Recipe[] = data.meals.map((item) => {
-          // חילוץ רשימת המצרכים מתוך השדות strIngredient1 עד strIngredient20
           const ingredients: string[] = [];
           for (let i = 1; i <= 20; i++) {
             const ingredient = item[`strIngredient${i}`];
             const measure = item[`strMeasure${i}`];
-            if (ingredient && ingredient.trim() !== '') {
-              ingredients.push(`${measure ? measure.trim() + ' ' : ''}${ingredient.trim()}`);
-            }
+            if (ingredient && ingredient.trim()) ingredients.push(`${measure ? `${measure.trim()} ` : ''}${ingredient.trim()}`);
           }
-
           return {
             id: item.idMeal,
             title: item.strMeal,
@@ -67,51 +73,46 @@ function App() {
             ingredients,
           };
         });
-
         setRecipes(mappedRecipes);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch recipes from server');
+      } catch {
+        setError('לא הצלחנו לטעון את המתכונים. בדקו את החיבור לאינטרנט ונסו שוב.');
       } finally {
         setLoading(false);
       }
     };
-
     fetchRecipes();
   }, []);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
+    } catch {
+      // The app remains usable if browser storage is unavailable.
+    }
+  }, [favorites]);
+
+  const toggleFavorite = (recipeId: string) => {
+    setFavorites((currentFavorites) =>
+      currentFavorites.includes(recipeId)
+        ? currentFavorites.filter((id) => id !== recipeId)
+        : [...currentFavorites, recipeId],
+    );
+  };
+
   return (
     <BrowserRouter>
-      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px', fontFamily: 'system-ui, sans-serif' }}>
+      <div className="app-shell">
         <Navbar />
-        <main>
-          {/* מצב 1: טעינה */}
-          {loading && (
-            <div style={{ textAlign: 'center', padding: '50px 20px', color: '#64748b' }}>
-              <h2>Loading recipes...</h2>
-              <p>Fetching fresh dishes from TheMealDB API</p>
-            </div>
-          )}
-
-          {/* מצב 2: שגיאה */}
-          {!loading && error && (
-            <div style={{
-              textAlign: 'center',
-              padding: '40px 20px',
-              backgroundColor: '#fef2f2',
-              borderRadius: '8px',
-              border: '1px solid #fecaca',
-              color: '#b91c1c'
-            }}>
-              <h2>Error fetching data</h2>
-              <p>{error}</p>
-            </div>
-          )}
-
-          {/* מצב 3: יש מידע - ניתוב רגיל */}
+        <main className="page-content">
+          {loading && <div className="status-message" role="status"><h2>טוענים מתכונים…</h2><p>רק רגע, אנחנו מביאים מתכונים מהעולם.</p></div>}
+          {!loading && error && <div className="status-message status-error" role="alert"><h2>טעינת המתכונים נכשלה</h2><p>{error}</p></div>}
           {!loading && !error && (
             <Routes>
-              <Route path="/" element={<RecipeList recipes={recipes} />} />
-              <Route path="/recipe/:id" element={<RecipeDetail recipes={recipes} />} />
+              <Route path="/" element={<RecipeList recipes={recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
+              <Route path="/recipe/:id" element={<RecipeDetail recipes={randomRecipe ? [...recipes, randomRecipe] : recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
+              <Route path="/favorites" element={<FavoritesPage favorites={favorites} allRecipes={recipes} onToggleFavorite={toggleFavorite} />} />
+              <Route path="/random" element={<RandomPage onRecipeLoaded={setRandomRecipe} />} />
+              <Route path="*" element={<section className="empty-state"><h1 className="page-heading">העמוד לא נמצא</h1><p>הכתובת שהזנתם אינה קיימת.</p></section>} />
             </Routes>
           )}
         </main>
@@ -121,3 +122,4 @@ function App() {
 }
 
 export default App;
+

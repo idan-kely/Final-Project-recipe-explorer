@@ -1,77 +1,58 @@
-import { useParams, Link } from 'react-router-dom';
+﻿import { useParams, Link } from 'react-router-dom';
 import type { Recipe } from '../types/recipe';
+import { formatInstructions } from '../utils/recipeUtils';
 
 interface RecipeDetailProps {
   recipes: Recipe[];
+  favorites: string[];
+  onToggleFavorite: (id: string) => void;
 }
 
-export default function RecipeDetail({ recipes }: RecipeDetailProps) {
-  // 1. קריאת ה-id מתוך שורת הכתובת ב-URL באמצעות ההוק useParams
+export default function RecipeDetail({ recipes, favorites, onToggleFavorite }: RecipeDetailProps) {
   const { id } = useParams<{ id: string }>();
-
-  // 2. איתור המתכון הספציפי במערך הנתונים לפי ה-id שנשלף
   const recipe = recipes.find((item) => item.id === id);
 
-  // 3. טיפול במצב שבו המזהה שגוי או שהמתכון לא קיים (Defensive Programming)
   if (!recipe) {
     return (
-      <div style={{ textAlign: 'center', padding: '40px' }}>
-        <h2>Recipe not found</h2>
-        <p style={{ color: '#64748b' }}>The recipe you are looking for does not exist.</p>
-        <Link to="/" style={{ color: '#2563eb', fontWeight: 600, textDecoration: 'none' }}>
-          ← Back to all recipes
-        </Link>
-      </div>
+      <section className="empty-state">
+        <h1 className="page-heading">המתכון לא נמצא</h1>
+        <p>ייתכן שהקישור אינו תקין או שהמתכון כבר לא זמין.</p>
+        <Link className="action-button action-button-primary" to="/">חזרה לכל המתכונים</Link>
+      </section>
     );
   }
 
-  // 4. רינדור הפרטים המלאים של המתכון
+  const isFavorite = favorites.includes(recipe.id);
+  const steps = formatInstructions(recipe.instructions);
+
   return (
-    <article style={{
-      background: '#ffffff',
-      padding: '24px',
-      borderRadius: '8px',
-      border: '1px solid #e2e8f0',
-      maxWidth: '700px',
-      margin: '0 auto',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-    }}>
-      <Link
-        to="/"
-        style={{
-          color: '#2563eb',
-          textDecoration: 'none',
-          fontWeight: 600,
-          display: 'inline-block',
-          marginBottom: '16px'
-        }}
-      >
-        ← Back to all recipes
-      </Link>
-
-      <h2 style={{ marginTop: 0, color: '#0f172a' }}>{recipe.title}</h2>
-
-      <img
-        src={recipe.thumbnail}
-        alt={recipe.title}
-        style={{
-          width: '100%',
-          maxHeight: '350px',
-          objectFit: 'cover',
-          borderRadius: '8px',
-          marginBottom: '16px'
-        }}
-      />
-
-      <div style={{ marginBottom: '16px', color: '#475569' }}>
-        <p><strong>Category:</strong> {recipe.category}</p>
-        <p><strong>Cuisine / Area:</strong> {recipe.area}</p>
+    <article className="recipe-detail">
+      <img className="recipe-detail-image" src={recipe.thumbnail} alt={recipe.title} />
+      <div className="recipe-detail-content">
+        <Link className="text-link" to="/">חזרה לכל המתכונים</Link>
+        <h1 className="recipe-detail-title">{recipe.title}</h1>
+        <div className="recipe-meta">
+          <span className="recipe-meta-item">קטגוריה: {recipe.category}</span>
+          <span className="recipe-meta-item">מטבח: {recipe.area}</span>
+        </div>
+        <button className={`action-button${isFavorite ? ' action-button-danger' : ''}`} type="button" aria-pressed={isFavorite} onClick={() => onToggleFavorite(recipe.id)}>
+          {isFavorite ? '♥ הסרה מהמועדפים' : '♡ הוספה למועדפים'}
+        </button>
+        <section className="instructions-section">
+          <h2 className="section-heading">אופן ההכנה</h2>
+          {steps.length > 0 ? (
+            <div className="instruction-list">
+              {steps.map((step, index) => <p className="instruction-step" key={`${index}-${step.slice(0, 24)}`}>{step}</p>)}
+            </div>
+          ) : <p className="empty-note">לא צורפו הוראות הכנה למתכון הזה.</p>}
+        </section>
+        {recipe.ingredients.length > 0 && (
+          <section className="ingredients-section">
+            <h2 className="section-heading">מצרכים</h2>
+            <ul className="ingredients-list">{recipe.ingredients.map((ingredient, index) => <li key={`${index}-${ingredient}`}>{ingredient}</li>)}</ul>
+          </section>
+        )}
       </div>
-
-      <h3 style={{ color: '#0f172a' }}>Instructions</h3>
-      <p style={{ lineHeight: '1.6', color: '#334155', whiteSpace: 'pre-line' }}>
-        {recipe.instructions}
-      </p>
     </article>
   );
 }

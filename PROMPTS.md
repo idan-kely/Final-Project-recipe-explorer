@@ -1,4 +1,4 @@
-# Prompts Log — Recipe Explorer
+﻿# Prompts Log — Recipe Explorer
 
 ## Task 1 — Show local list with types
 Prompt: Create the project structure using Vite and TypeScript, define a strict Recipe interface without any, and create a mockRecipes.json file with 3 recipes to display on the home page.
@@ -38,3 +38,19 @@ I checked: Verified component type safety, verified loading and error states, an
 Prompt: Update the Navbar component to include active state styling and links to Home, Favorites, and Random pages using React Router's NavLink component strictly without any.
 Agent did: Modified `src/components/Navbar.tsx` with dynamic `NavLink` inline style functions for visual active feedback.
 I checked: Clicked each navigation link in the browser, verified the URL paths changed correctly, and confirmed active styling (bold text and blue border) highlighted the current page.
+
+## Task 5.4 — Connect Favorites and Random Recipe Pages
+Prompt: Connect the Favorites and Random pages to the application. Add the missing routes, allow users to add and remove recipes from favorites on the recipe list, recipe details, and Favorites page, and make the full recipe link open the randomly selected recipe's detail page.
+Agent did: Added the `/favorites` and `/random` routes, connected favorite toggling across the recipe list, recipe details, and Favorites page, and passed the randomly fetched recipe to the recipe details page.
+I checked: Ran `npm.cmd run build` successfully and manually verified in the browser that the Favorites and Random flows work, including opening the randomly selected recipe's full details.
+
+## Task 5.5 — Persist Favorites with localStorage
+Prompt: Save favorite recipe IDs in `localStorage` and restore them when the application loads, with safe handling for invalid saved data.
+Agent did: Added initialization of the favorites state from `localStorage` and an effect that saves favorite IDs whenever the favorites list changes.
+I checked: Manually verified in the browser that favorites remain saved after reloading the page and can still be removed.
+
+## Task 5.6 — Improve Hebrew Interface and Recipe Instructions Layout
+Prompt: Update the interface styling for Hebrew and right-to-left reading, use a consistent Hebrew-friendly font, and display the original recipe instructions clearly without translating them, adding step numbers, or leaving standalone number-only lines.
+Agent did: Updated the page language and direction, applied consistent responsive styling and Hebrew labels, and changed recipe instruction formatting to remove standalone numbers and avoid UI-added numbering while preserving the API's original recipe text.
+I checked: Ran `npm.cmd run build` successfully and manually verified the updated page layout and recipe instructions in the browser.
+

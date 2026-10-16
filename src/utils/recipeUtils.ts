@@ -21,9 +21,14 @@ export function formatInstructions(instructions: string): string[] {
   }
 
   return instructions
-    .split(/\r?\n/)
+    .replace(/\r\n?/g, '\n')
+    // The API sometimes puts stray numbered-list markers on their own line.
+    .replace(/(?:^|\n)\s*\d+[.)]?\s*(?=\n|$)/g, '\n')
+    // Split on paragraph breaks and sentence boundaries when the API returns
+    // the whole recipe as one long paragraph.
+    .split(/\n+|(?<=[.!?])\s+(?=[A-Z])/)
     .map((step) => step.trim())
-    .filter((step) => step.length > 0);
+    .filter((step) => step.length > 0 && !/^\d+[.)]?$/.test(step));
 }
 
 

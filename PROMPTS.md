@@ -90,3 +90,8 @@ I checked: Ran `npm run build` successfully and confirmed all 5 unit tests pass 
 Prompt: Fix recipe details so a recipe opened from a random selection still loads after refreshing the page. Add newly selected random recipes to the main recipe list without duplicates, hide the cuisine label when the API provides no area, and remove standalone "Enjoy" lines from the instructions.
 Agent did: Updated recipe detail loading to fetch a recipe by ID when it is not already in app state, added randomly selected recipes to the main list if they are not already present, hid empty cuisine labels, and filtered standalone "Enjoy" lines in `formatInstructions`.
 I checked: Ran `npm run build` successfully. The user manually verified that the random recipe includes its ingredients.
+
+## Fix Random Recipe Image Switching and Loading
+Prompt: Fix the random recipe page so the recipe image stays consistent and appears at the same time as the recipe details. Keep the loading message visible briefly.
+Agent did: Fixed the random recipe display so older results do not replace the current recipe, cleared the previous recipe while fetching, added a 500 ms minimum loading state, and made the recipe image and details appear at the same time.
+I checked: Ran `npm run build` successfully.

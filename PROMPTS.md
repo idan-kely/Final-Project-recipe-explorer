@@ -59,3 +59,9 @@ I checked: Ran `npm.cmd run build` successfully and manually verified the update
 Prompt: Make the entire application interface English and left-to-right, remove trailing periods from recipe instruction lines, format instructions as clear numbered steps, and remove API labels such as "step 1" and filler words such as "Next" at the start of a step. Preserve the original recipe text otherwise.
 Agent did: Replaced Hebrew interface text with English, updated the document language and direction and font, and refined instruction formatting to remove trailing periods, API step labels, and leading "Next" while displaying recipe instructions as numbered steps.
 I checked: Ran `npm.cmd run build` successfully after the interface and instruction formatting changes.
+
+## Task 6 — Add Recipe Search and Filtering
+Prompt: Add a real-time search field to the recipe list that filters recipes by title or category. Show a clear empty state when no recipes match and style the field to fit the responsive design.
+Agent did: Added controlled search state to `RecipeList`, applied the existing filter utility as the query changes, and added styled English labels and a no-match message.
+I checked: Ran `npm.cmd run build` successfully and manually verified in the browser that searching by recipe title and category filters the recipes correctly.
+

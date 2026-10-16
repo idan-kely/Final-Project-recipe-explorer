@@ -135,3 +135,18 @@
   .site-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
   .nav-link { padding: 9px 6px; text-align: center; font-size: .88rem; }
 }
+.recipe-search-label { display: block; margin-bottom: 8px; color: #384a3d; font-weight: 700; }
+.recipe-search-input {
+  display: block;
+  width: min(100%, 520px);
+  min-height: 48px;
+  margin-bottom: 24px;
+  padding: 11px 15px;
+  border: 1px solid #d8e3d9;
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+  color: #26332d;
+}
+.recipe-search-input:focus { border-color: #2f6b45; box-shadow: 0 0 0 3px rgb(47 107 69 / 13%); }
+.search-empty-state { margin-top: 12px; }

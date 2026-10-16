@@ -31,7 +31,9 @@ export default function FavoritesPage({ favorites, allRecipes, onToggleFavorite 
               <img className="recipe-card-image" src={recipe.thumbnail} alt={recipe.title} />
               <div className="recipe-card-body">
                 <h2 className="recipe-card-title">{recipe.title}</h2>
-                <p className="recipe-card-meta">{recipe.category} · {recipe.area}</p>
+                <p className="recipe-card-meta">
+                  {recipe.area ? `${recipe.category} · ${recipe.area}` : recipe.category}
+                </p>
               </div>
             </Link>
             <button className="action-button action-button-danger recipe-card-action" type="button" onClick={() => onToggleFavorite(recipe.id)}>

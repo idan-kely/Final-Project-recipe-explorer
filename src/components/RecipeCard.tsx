@@ -14,7 +14,9 @@ export default function RecipeCard({ recipe, isFavorite, onToggleFavorite }: Rec
         <img className="recipe-card-image" src={recipe.thumbnail} alt={recipe.title} />
         <div className="recipe-card-body">
           <h2 className="recipe-card-title">{recipe.title}</h2>
-          <p className="recipe-card-meta">{recipe.category} · {recipe.area}</p>
+          <p className="recipe-card-meta">
+            {recipe.area ? `${recipe.category} · ${recipe.area}` : recipe.category}
+          </p>
         </div>
       </Link>
       <button className={`action-button recipe-card-action${isFavorite ? ' action-button-danger' : ''}`} type="button" aria-pressed={isFavorite} onClick={() => onToggleFavorite(recipe.id)}>

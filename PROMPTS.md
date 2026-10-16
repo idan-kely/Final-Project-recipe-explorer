@@ -23,3 +23,8 @@ I checked: Reloaded the application in the browser at http://localhost:5173, ver
 Prompt: Set up Vitest and @vitest/ui, write modular helper functions for filtering, formatting, and category statistics, and add 5 comprehensive unit tests without using any.
 Agent did: Added test scripts to package.json, created src/utils/recipeUtils.ts with pure business logic functions, and wrote 5 unit tests in src/utils/recipeUtils.test.ts.
 I checked: Ran `npm test` in the terminal to verify all 5 tests passed, launched `npm run test:ui` to inspect tests in the browser UI, and ran `npm run build` to confirm zero TypeScript compilation errors.
+
+## Task 5.1 — Create Favorites Page Component
+Prompt: Create a dedicated FavoritesPage component in TypeScript to display bookmarked recipes, using the native array includes method to filter saved IDs without using any.
+Agent did: Created `src/pages/FavoritesPage.tsx` with responsive recipe card grid, an empty-state message with navigation link, and a remove-from-favorites button.
+I checked: Inspected the component code, verified TypeScript props interface, and confirmed the use of native array method `includes()` for ID filtering.

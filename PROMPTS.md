@@ -28,3 +28,8 @@ I checked: Ran `npm test` in the terminal to verify all 5 tests passed, launched
 Prompt: Create a dedicated FavoritesPage component in TypeScript to display bookmarked recipes, using the native array includes method to filter saved IDs without using any.
 Agent did: Created `src/pages/FavoritesPage.tsx` with responsive recipe card grid, an empty-state message with navigation link, and a remove-from-favorites button.
 I checked: Inspected the component code, verified TypeScript props interface, and confirmed the use of native array method `includes()` for ID filtering.
+
+## Task 5.2 — Create Random Recipe Generator Page
+Prompt: Build a standalone RandomPage component fetching surprise dishes on demand from TheMealDB random.php endpoint with loading, error, and refresh triggers.
+Agent did: Created `src/pages/RandomPage.tsx` integrating dynamic fetch, formatting instructions via `formatInstructions` utility, and rendering an interactive re-roll button.
+I checked: Verified component type safety, verified loading and error states, and confirmed manual re-draw button logic without page refresh.

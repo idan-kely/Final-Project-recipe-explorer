@@ -18,3 +18,8 @@ I checked: Tested the navigation again in the browser to ensure no dead links ex
 Prompt: Replace the local mock JSON with live fetching from TheMealDB API in App.tsx, handling loading, error, and data states strictly without using `any`.
 Agent did: Updated `src/App.tsx` with native `fetch` inside `useEffect`, mapped the raw API response to the clean `Recipe` interface, and added loading and error UI states.
 I checked: Reloaded the application in the browser at http://localhost:5173, verified recipes are fetched dynamically from the live API with the loading spinner, tested error fallback, and confirmed `npm run build` succeeds without TypeScript errors.
+
+## Task 4 — Unit Testing with Vitest and Vitest UI
+Prompt: Set up Vitest and @vitest/ui, write modular helper functions for filtering, formatting, and category statistics, and add 5 comprehensive unit tests without using any.
+Agent did: Added test scripts to package.json, created src/utils/recipeUtils.ts with pure business logic functions, and wrote 5 unit tests in src/utils/recipeUtils.test.ts.
+I checked: Ran `npm test` in the terminal to verify all 5 tests passed, launched `npm run test:ui` to inspect tests in the browser UI, and ran `npm run build` to confirm zero TypeScript compilation errors.

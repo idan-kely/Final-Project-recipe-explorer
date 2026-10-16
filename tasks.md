@@ -9,7 +9,7 @@
 - [x] **Task 3: Live API Integration (TheMealDB)**
   - **Done when:** Local mock data is replaced with live `fetch` inside `useEffect`, displaying loading, error, and data states.
 
-- [ ] **Task 4: Unit Testing with Vitest**
+- [x] **Task 4: Unit Testing with Vitest**
   - **Done when:** At least 5 unit tests pass with `npm test` and run via `@vitest/ui`.
 
 - [ ] **Task 5: Two Extra Pages (Favorites & Random Meal)**

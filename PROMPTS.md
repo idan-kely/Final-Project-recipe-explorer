@@ -42,7 +42,7 @@ I checked: Clicked each navigation link in the browser, verified the URL paths c
 ## Task 5.4 - Connect Favorites and Random Recipe Pages
 Prompt: Connect the Favorites and Random pages to the application. Add the missing routes, allow users to add and remove recipes from favorites on the recipe list, recipe details, and Favorites page, and make the full recipe link open the randomly selected recipe's detail page.
 Agent did: Added the `/favorites` and `/random` routes, connected favorite toggling across the recipe list, recipe details, and Favorites page, and passed the randomly fetched recipe to the recipe details page.
-I checked: Ran `npm.cmd run build` successfully and manually verified in the browser that the Favorites and Random flows work, including opening the randomly selected recipe's full details.
+I checked: Ran `npm run build` successfully and manually verified in the browser that the Favorites and Random flows work, including opening the randomly selected recipe's full details.
 
 ## Task 5.5 - Persist Favorites with localStorage
 Prompt: Save favorite recipe IDs in `localStorage` and restore them when the application loads, with safe handling for invalid saved data.
@@ -52,23 +52,23 @@ I checked: Manually verified in the browser that favorites remain saved after re
 ## Task 5.6 - Improve Hebrew Interface and Recipe Instructions Layout
 Prompt: Update the interface styling for Hebrew and right-to-left reading, use a consistent Hebrew-friendly font, and display the original recipe instructions clearly without translating them, adding step numbers, or leaving standalone number-only lines.
 Agent did: Updated the page language and direction, applied consistent responsive styling and Hebrew labels, and changed recipe instruction formatting to remove standalone numbers and avoid UI-added numbering while preserving the API's original recipe text.
-I checked: Ran `npm.cmd run build` successfully and manually verified the updated page layout and recipe instructions in the browser.
+I checked: Ran `npm run build` successfully and manually verified the updated page layout and recipe instructions in the browser.
 
 
 ## Task 5.7 - Refine English Interface and Recipe Instructions
 Prompt: Make the entire application interface English and left-to-right, remove trailing periods from recipe instruction lines, format instructions as clear numbered steps, and remove API labels such as "step 1" and filler words such as "Next" at the start of a step. Preserve the original recipe text otherwise.
 Agent did: Replaced Hebrew interface text with English, updated the document language and direction and font, and refined instruction formatting to remove trailing periods, API step labels, and leading "Next" while displaying recipe instructions as numbered steps.
-I checked: Ran `npm.cmd run build` successfully after the interface and instruction formatting changes.
+I checked: Ran `npm run build` successfully after the interface and instruction formatting changes.
 
 ## Add Recipe Search and Filtering
 Prompt: Add a real-time search field to the recipe list that filters recipes by title or category. Show a clear empty state when no recipes match and style the field to fit the responsive design.
 Agent did: Added controlled search state to `RecipeList`, applied the existing filter utility as the query changes, and added styled English labels and a no-match message.
-I checked: Ran `npm.cmd run build` successfully and manually verified in the browser that searching by recipe title and category filters the recipes correctly.
+I checked: Ran `npm run build` successfully and manually verified in the browser that searching by recipe title and category filters the recipes correctly.
 
 ## Investigate and Fix a Failing Unit Test
 Prompt: I ran the unit tests and one of them failed. Find out why it failed, explain the cause, and fix it.
 Agent did: Explained that the test expected the old `formatInstructions` behavior, while the function had since changed to remove API step labels such as `Step 1`. Updated the test expectations to match the current behavior while checking that the instruction text is preserved.
-I checked: Ran `npm.cmd test` and confirmed all 5 tests passed.
+I checked: Ran `npm test` and confirmed all 5 tests passed.
 
 ## Include Ingredients for Random Recipes
 Prompt: Make sure ingredients from a randomly fetched recipe are available on its full recipe details page.
@@ -89,9 +89,14 @@ I checked: Ran `npm run build` successfully and confirmed all 5 unit tests pass 
 ## Improve Random Recipe Flow and Clean Instructions
 Prompt: Fix recipe details so a recipe opened from a random selection still loads after refreshing the page. Add newly selected random recipes to the main recipe list without duplicates, hide the cuisine label when the API provides no area, and remove standalone "Enjoy" lines from the instructions.
 Agent did: Updated recipe detail loading to fetch a recipe by ID when it is not already in app state, added randomly selected recipes to the main list if they are not already present, hid empty cuisine labels, and filtered standalone "Enjoy" lines in `formatInstructions`.
-I checked: Ran `npm run build` successfully. The user manually verified that the random recipe includes its ingredients.
+I checked: Ran `npm run build` successfully. I manually verified that the random recipe includes its ingredients.
 
 ## Fix Random Recipe Image Switching and Loading
 Prompt: Fix the random recipe page so the recipe image stays consistent and appears at the same time as the recipe details. Keep the loading message visible briefly.
 Agent did: Fixed the random recipe display so older results do not replace the current recipe, cleared the previous recipe while fetching, added a 500 ms minimum loading state, and made the recipe image and details appear at the same time.
 I checked: Ran `npm run build` successfully.
+
+## Pre-Submission Review
+Prompt: Review my code against the final project guidelines before submission. I want the code to be as simple as possible, Also check that PROMPTS.md follows the course template.
+Agent did: Reviewed the project against the requirements and ran the tests, build, and lint, without changing code. Suggested places where the code could be simpler and listed likely defense questions. In PROMPTS.md, made two small wording fixes.
+I checked: Read the review and the template comparison, and chose which changes to apply. I did not change the code myself.

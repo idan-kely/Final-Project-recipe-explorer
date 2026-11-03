@@ -36,6 +36,20 @@ function readSavedFavorites(): string[] {
   return [];
 }
 
+const RANDOM_STORAGE_KEY = 'recipe-explorer-random';
+
+function readSavedRandomRecipes(): Recipe[] {
+  try {
+    const savedRandomRecipes = localStorage.getItem(RANDOM_STORAGE_KEY);
+    if (!savedRandomRecipes) return [];
+    const parsedRandomRecipes: unknown = JSON.parse(savedRandomRecipes);
+    if (Array.isArray(parsedRandomRecipes)) return parsedRandomRecipes as Recipe[];
+  } catch {
+    // Invalid or unavailable storage falls back to an empty list.
+  }
+  return [];
+}
+
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [randomRecipe, setRandomRecipe] = useState<Recipe | null>(null);
@@ -73,7 +87,10 @@ function App() {
             ingredients,
           };
         });
-        setRecipes(mappedRecipes);
+        const savedRandomRecipes = readSavedRandomRecipes().filter(
+          (savedRecipe) => !mappedRecipes.some((recipe) => recipe.id === savedRecipe.id),
+        );
+        setRecipes([...mappedRecipes, ...savedRandomRecipes]);
       } catch {
         setError('Could not load recipes. Please check your internet connection and try again');
       } finally {
@@ -106,6 +123,15 @@ function App() {
         : [...currentRecipes, randomRecipe],
     );
     setRandomRecipe(randomRecipe);
+
+    const savedRandomRecipes = readSavedRandomRecipes();
+    if (!savedRandomRecipes.some((recipe) => recipe.id === randomRecipe.id)) {
+      try {
+        localStorage.setItem(RANDOM_STORAGE_KEY, JSON.stringify([...savedRandomRecipes, randomRecipe]));
+      } catch {
+        // The app remains usable if browser storage is unavailable.
+      }
+    }
   };
 
   return (

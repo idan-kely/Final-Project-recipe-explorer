@@ -100,3 +100,8 @@ I checked: Ran `npm run build` successfully.
 Prompt: Review my code against the final project guidelines before submission. I want the code to be as simple as possible, Also check that PROMPTS.md follows the course template.
 Agent did: Reviewed the project against the requirements and ran the tests, build, and lint, without changing code. Suggested places where the code could be simpler and listed likely defense questions. In PROMPTS.md, made two small wording fixes.
 I checked: Read the review and the template comparison, and chose which changes to apply. I did not change the code myself.
+
+## Keep Random Favorites After Refresh
+Prompt: Fix the bug where a random recipe saved to favorites disappears from the Favorites page after refreshing. Keep the fix simple and only in App.tsx if possible.
+Agent did: Saved randomly selected recipes in `localStorage` in `src/App.tsx` and added them back to the recipe list after the API recipes load, skipping duplicates.
+I checked: Ran `npm run build` and `npm test`, and manually verified in the browser that a random recipe saved to favorites still appears on the Favorites page after refreshing.

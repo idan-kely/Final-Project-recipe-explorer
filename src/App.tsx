@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import type { Recipe } from './types/recipe';
 import Navbar from './components/Navbar';
@@ -116,7 +116,8 @@ function App() {
     );
   };
 
-  const addRandomRecipeToList = (randomRecipe: Recipe) => {
+  // useCallback keeps the same function between renders, so RandomPage does not fetch again on every App render.
+  const addRandomRecipeToList = useCallback((randomRecipe: Recipe) => {
     setRecipes((currentRecipes) =>
       currentRecipes.some((recipe) => recipe.id === randomRecipe.id)
         ? currentRecipes
@@ -132,7 +133,7 @@ function App() {
         // The app remains usable if browser storage is unavailable.
       }
     }
-  };
+  }, []);
 
   return (
     <BrowserRouter>

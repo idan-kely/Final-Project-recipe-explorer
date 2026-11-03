@@ -105,3 +105,8 @@ I checked: Read the review and the template comparison, and chose which changes 
 Prompt: Fix the bug where a random recipe saved to favorites disappears from the Favorites page after refreshing. Keep the fix simple and only in App.tsx if possible.
 Agent did: Saved randomly selected recipes in `localStorage` in `src/App.tsx` and added them back to the recipe list after the API recipes load, skipping duplicates.
 I checked: Ran `npm run build` and `npm test`, and manually verified in the browser that a random recipe saved to favorites still appears on the Favorites page after refreshing.
+
+## Fix Lint Error in Random Recipe Page
+Prompt: What else did you want to fix? Okay, fix it.
+Agent did: Pointed out that `npm run lint` fails in RandomPage because setState is called inside useEffect. Moved the random recipe fetch inside `useEffect` in `src/pages/RandomPage.tsx`, triggered new requests with a `requestCount` state from the button, replaced the `useRef` request check with an `ignore` cleanup flag, and wrapped `addRandomRecipeToList` in `useCallback` in `src/App.tsx`.
+I checked: Ran `npm run lint` with no errors, `npm run build`, and `npm test`, and manually verified in the browser that the Random page loads a recipe, picks another recipe from the button, and opens the full recipe.

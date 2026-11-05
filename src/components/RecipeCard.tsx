@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom';
 import type { Recipe } from '../types/recipe';
+import FavoriteButton from './FavoriteButton';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -19,9 +20,7 @@ export default function RecipeCard({ recipe, isFavorite, onToggleFavorite }: Rec
           </p>
         </div>
       </Link>
-      <button className={`action-button recipe-card-action${isFavorite ? ' action-button-danger' : ''}`} type="button" aria-pressed={isFavorite} onClick={() => onToggleFavorite(recipe.id)}>
-        {isFavorite ? '♥ Remove from favorites' : '♡ Add to favorites'}
-      </button>
+      <FavoriteButton className="recipe-card-action" isFavorite={isFavorite} onToggle={() => onToggleFavorite(recipe.id)} />
     </article>
   );
 }

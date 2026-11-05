@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom';
 import type { Recipe } from '../types/recipe';
+import RecipeCard from '../components/RecipeCard';
 
 interface FavoritesPageProps {
   favorites: string[];
@@ -26,20 +27,7 @@ export default function FavoritesPage({ favorites, allRecipes, onToggleFavorite 
       <p className="page-subtitle">{favoriteRecipes.length} saved recipes</p>
       <div className="recipe-grid">
         {favoriteRecipes.map((recipe) => (
-          <article className="recipe-card" key={recipe.id}>
-            <Link to={`/recipe/${recipe.id}`} className="recipe-card-link">
-              <img className="recipe-card-image" src={recipe.thumbnail} alt={recipe.title} />
-              <div className="recipe-card-body">
-                <h2 className="recipe-card-title">{recipe.title}</h2>
-                <p className="recipe-card-meta">
-                  {recipe.area ? `${recipe.category} · ${recipe.area}` : recipe.category}
-                </p>
-              </div>
-            </Link>
-            <button className="action-button action-button-danger recipe-card-action" type="button" onClick={() => onToggleFavorite(recipe.id)}>
-              ♥ Remove from favorites
-            </button>
-          </article>
+          <RecipeCard key={recipe.id} recipe={recipe} isFavorite={true} onToggleFavorite={onToggleFavorite} />
         ))}
       </div>
     </section>

@@ -1,5 +1,6 @@
 ﻿import { useMemo, useState } from 'react';
-import RecipeCard from './RecipeCard';
+import RecipeCard from '../components/RecipeCard';
+import SearchBar from '../components/SearchBar';
 import type { Recipe } from '../types/recipe';
 import { filterRecipes } from '../utils/recipeUtils';
 
@@ -21,15 +22,7 @@ export default function RecipeList({ recipes, favorites, onToggleFavorite }: Rec
     <section>
       <h1 className="page-heading">What would you like to cook?</h1>
       <p className="page-subtitle">Delicious recipes from around the world</p>
-      <label className="recipe-search-label" htmlFor="recipe-search">Search recipes</label>
-      <input
-        id="recipe-search"
-        className="recipe-search-input"
-        type="search"
-        value={searchQuery}
-        onChange={(event) => setSearchQuery(event.target.value)}
-        placeholder="Search by recipe name or category"
-      />
+      <SearchBar value={searchQuery} onChange={setSearchQuery} />
       {filteredRecipes.length === 0 ? (
         <div className="empty-state search-empty-state"><h2>No matching recipes</h2><p>Try a different name or category</p></div>
       ) : (

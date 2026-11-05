@@ -2,6 +2,8 @@
 import { useParams, Link } from 'react-router-dom';
 import type { Recipe } from '../types/recipe';
 import { formatInstructions } from '../utils/recipeUtils';
+import FavoriteButton from '../components/FavoriteButton';
+import StatusMessage from '../components/StatusMessage';
 
 interface MealDBDetailItem {
   idMeal: string;
@@ -77,7 +79,7 @@ export default function RecipeDetail({ recipes, favorites, onToggleFavorite }: R
   const recipe = knownRecipe ?? fetchedRecipe;
 
   if (!recipe && loading) {
-    return <div className="status-message" role="status">Loading recipe details…</div>;
+    return <StatusMessage text="Loading recipe details…" />;
   }
 
   if (!recipe) {
@@ -103,9 +105,7 @@ export default function RecipeDetail({ recipes, favorites, onToggleFavorite }: R
           <span className="recipe-meta-item">Category: {recipe.category}</span>
           {recipe.area?.trim() && <span className="recipe-meta-item">Cuisine: {recipe.area}</span>}
         </div>
-        <button className={`action-button${isFavorite ? ' action-button-danger' : ''}`} type="button" aria-pressed={isFavorite} onClick={() => onToggleFavorite(recipe.id)}>
-          {isFavorite ? '♥ Remove from favorites' : '♡ Add to favorites'}
-        </button>
+        <FavoriteButton isFavorite={isFavorite} onToggle={() => onToggleFavorite(recipe.id)} />
         <section className="instructions-section">
           <h2 className="section-heading">Instructions</h2>
           {steps.length > 0 ? (

@@ -2,10 +2,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import type { Recipe } from './types/recipe';
 import Navbar from './components/Navbar';
-import RecipeList from './components/RecipeList';
-import RecipeDetail from './components/RecipeDetail';
+import RecipeList from './pages/RecipeList';
+import RecipeDetail from './pages/RecipeDetail';
 import FavoritesPage from './pages/FavoritesPage';
 import RandomPage from './pages/RandomPage';
+import StatusMessage from './components/StatusMessage';
 import './App.css';
 
 interface MealDBItem {
@@ -142,16 +143,16 @@ function App() {
         <main className="page-content">
           <Routes>
             <Route path="/" element={loading
-              ? <div className="status-message" role="status"><h2>Loading recipes…</h2><p>Getting fresh recipes from around the world</p></div>
+              ? <StatusMessage title="Loading recipes…" text="Getting fresh recipes from around the world" />
               : error
-                ? <div className="status-message status-error" role="alert"><h2>Could not load recipes</h2><p>{error}</p></div>
+                ? <StatusMessage isError title="Could not load recipes" text={error} />
                 : <RecipeList recipes={recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />
             } />
             <Route path="/recipe/:id" element={<RecipeDetail recipes={randomRecipe ? [...recipes, randomRecipe] : recipes} favorites={favorites} onToggleFavorite={toggleFavorite} />} />
             <Route path="/favorites" element={loading
-              ? <div className="status-message" role="status">Loading favorite recipes…</div>
+              ? <StatusMessage text="Loading favorite recipes…" />
               : error
-                ? <div className="status-message status-error" role="alert"><h2>Could not load recipes</h2><p>{error}</p></div>
+                ? <StatusMessage isError title="Could not load recipes" text={error} />
                 : <FavoritesPage favorites={favorites} allRecipes={recipes} onToggleFavorite={toggleFavorite} />
             } />
             <Route path="/random" element={<RandomPage onRecipeLoaded={addRandomRecipeToList} />} />

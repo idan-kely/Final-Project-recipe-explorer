@@ -62,8 +62,8 @@ Recipe data is fetched from [TheMealDB](https://www.themealdb.com/api.php), a pu
 
 ## Project Structure
 
-- `src/components/` - navigation, recipe list, cards, and recipe details
-- `src/pages/` - favorites and random recipe pages
+- `src/components/` - reusable parts: navigation, recipe card, search bar, favorite button, and status messages
+- `src/pages/` - one component per route: recipe list, recipe details, favorites, and random recipe
 - `src/utils/` - recipe filtering, instruction formatting, and category statistics
 - `src/types/` - TypeScript recipe model
 - `src/utils/recipeUtils.test.ts` - unit tests for recipe utility functions

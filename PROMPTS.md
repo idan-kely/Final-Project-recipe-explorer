@@ -110,3 +110,8 @@ I checked: Ran `npm run build` and `npm test`, and manually verified in the brow
 Prompt: What else did you want to fix? Okay, fix it.
 Agent did: Pointed out that `npm run lint` fails in RandomPage because setState is called inside useEffect. Moved the random recipe fetch inside `useEffect` in `src/pages/RandomPage.tsx`, triggered new requests with a `requestCount` state from the button, replaced the `useRef` request check with an `ignore` cleanup flag, and wrapped `addRandomRecipeToList` in `useCallback` in `src/App.tsx`.
 I checked: Ran `npm run lint` with no errors, `npm run build`, and `npm test`, and manually verified in the browser that the Random page loads a recipe, picks another recipe from the button, and opens the full recipe.
+
+## Separate Pages and Components
+Prompt: It looks like the pages and components are not organized correctly. Some of the components look like pages. Please separate them and keep the code simple.
+Agent did: Moved `RecipeList` and `RecipeDetail` to `src/pages/`, because each of them is shown by its own route, and updated the imports. Added `SearchBar`, `FavoriteButton`, and `StatusMessage` in `src/components/`, used them in RecipeList, RecipeCard, RecipeDetail, RandomPage, and App, and reused `RecipeCard` in FavoritesPage instead of repeating the card markup. Updated the project structure in README.md.
+I checked: Ran `npm run lint`, `npm run build`, and `npm test` with no errors. Checked that the split is what I expected: every page in `src/pages/` has its own route, and `src/components/` has at least 4 non-page components (Navbar, RecipeCard, SearchBar, FavoriteButton, StatusMessage).

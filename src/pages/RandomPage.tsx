@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import type { Recipe } from '../types/recipe';
+import StatusMessage from '../components/StatusMessage';
 
 interface MealDBItem {
   idMeal: string;
@@ -104,7 +105,7 @@ export default function RandomPage({ onRecipeLoaded }: RandomPageProps) {
         </button>
       </div>
 
-      {loading && <div className="status-message" role="status">Finding something delicious…</div>}
+      {loading && <StatusMessage text="Finding something delicious…" />}
       {error && !loading && <div className="status-message status-error" role="alert"><p>{error}</p><button className="action-button" type="button" onClick={pickAnotherRecipe}>Try again</button></div>}
 
       {!loading && !error && recipe && (
